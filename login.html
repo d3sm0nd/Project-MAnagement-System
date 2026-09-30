@@ -3,576 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zoho Projects Clone</title>
-    <!-- Tailwind CSS CDN -->
+    <title>Zoho Projects Pro - Login</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            background:
+                radial-gradient(circle at 15% 20%, rgba(239,68,68,.16), transparent 30%),
+                radial-gradient(circle at 85% 80%, rgba(37,99,235,.14), transparent 30%),
+                #0f172a;
+        }
+        .glass {
+            background: rgba(255,255,255,.97);
+            box-shadow: 0 25px 70px rgba(0,0,0,.35);
+        }
+        .login-btn { transition: transform .15s ease, box-shadow .15s ease; }
+        .login-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 25px rgba(220,38,38,.25); }
+        .shake { animation: shake .35s ease-in-out; }
+        @keyframes shake {
+            0%,100% { transform: translateX(0); }
+            25% { transform: translateX(-7px); }
+            75% { transform: translateX(7px); }
+        }
+    </style>
 </head>
-<body class="bg-gray-100 font-sans text-gray-800 antialiased h-screen flex flex-col">
-
-    <!-- Top Navigation Bar -->
-    <header class="bg-slate-900 text-white flex items-center justify-between px-6 py-3 border-b border-slate-800 shrink-0">
-        <div class="flex items-center space-x-3">
-            <i class="fa-solid fa-square-poll-vertical text-red-500 text-2xl"></i>
-            <span class="font-bold text-xl tracking-wide">Zoho Projects <span class="text-xs bg-red-600 px-2 py-0.5 rounded text-white uppercase ml-1">Pro</span></span>
-        </div>
-        <div class="flex items-center space-x-4">
-            <button onclick="openTaskModal()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition flex items-center gap-2">
-                <i class="fa-solid fa-plus"></i> New Task
-            </button>
-            <div class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center font-bold text-sm border border-slate-600">
-                VS
+<body class="min-h-screen flex items-center justify-center p-5">
+    <main class="w-full max-w-md">
+        <section id="login-card" class="glass rounded-2xl p-8 md:p-10">
+            <div class="flex justify-center mb-5">
+                <div class="w-16 h-16 rounded-2xl bg-slate-900 flex items-center justify-center shadow-lg">
+                    <i class="fa-solid fa-square-poll-vertical text-red-500 text-3xl"></i>
+                </div>
             </div>
-        </div>
-    </header>
 
-    <div class="flex flex-1 overflow-hidden">
-        <!-- Sidebar Navigation -->
-        <aside class="w-64 bg-slate-800 text-slate-300 flex flex-col justify-between p-4 shrink-0">
-            <nav class="space-y-1">
-                <p class="text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2 px-3">Modules</p>
-                
-                <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 transition bg-slate-700 text-white">
-                    <i class="fa-solid fa-chart-pie w-5 text-center"></i> Dashboard
-                </button>
-                
-                <button onclick="switchTab('tasks')" id="nav-tasks" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-list-check w-5 text-center"></i> Classic Tasks
-                </button>
-
-                <button onclick="switchTab('kanban')" id="nav-kanban" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-table-columns w-5 text-center"></i> Kanban Board
-                </button>
-
-                <button onclick="switchTab('gantt')" id="nav-gantt" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-chart-gantt w-5 text-center"></i> Gantt Chart
-                </button>
-
-                <button onclick="switchTab('timesheet')" id="nav-timesheet" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-clock w-5 text-center"></i> Timesheets
-                </button>
-
-                <button onclick="switchTab('issues')" id="nav-issues" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-bug w-5 text-center"></i> Issue Tracker
-                </button>
-
-                <button onclick="switchTab('reports')" id="nav-reports" class="nav-btn w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm font-medium hover:bg-slate-700 transition">
-                    <i class="fa-solid fa-chart-line w-5 text-center"></i> Reports
-                </button>
-            </nav>
-            <div class="border-t border-slate-700 pt-3 text-xs text-slate-400 text-center">
-                Zoho Projects Replica v1.0
+            <div class="text-center mb-8">
+                <h1 class="text-2xl font-bold text-slate-900">Zoho Projects <span class="text-xs bg-red-600 px-2 py-1 rounded text-white uppercase">Pro</span></h1>
+                <p class="text-sm text-slate-500 mt-2">Sign in to access your project portal</p>
             </div>
-        </aside>
 
-        <!-- Main Workspace -->
-        <main class="flex-1 overflow-y-auto p-6 bg-gray-50">
-
-            <!-- MODULE 1: DASHBOARD -->
-            <section id="module-dashboard" class="module-content space-y-6">
-                <h1 class="text-2xl font-bold text-gray-800">Project Overview Dashboard</h1>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <span class="text-xs text-gray-500 font-semibold uppercase">Total Tasks</span>
-                        <div id="dash-total" class="text-3xl font-bold text-slate-800 mt-1">0</div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <span class="text-xs text-gray-500 font-semibold uppercase">Completed Tasks</span>
-                        <div id="dash-completed" class="text-3xl font-bold text-green-600 mt-1">0</div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <span class="text-xs text-gray-500 font-semibold uppercase">Open Issues</span>
-                        <div id="dash-issues" class="text-3xl font-bold text-red-600 mt-1">0</div>
-                    </div>
-                    <div class="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
-                        <span class="text-xs text-gray-500 font-semibold uppercase">Hours Logged</span>
-                        <div id="dash-hours" class="text-3xl font-bold text-blue-600 mt-1">0h</div>
-                    </div>
-                </div>
-
-                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                    <h2 class="text-lg font-bold mb-4">Recent Activity</h2>
-                    <ul id="activity-log" class="divide-y divide-gray-100 text-sm text-gray-600">
-                        <li class="py-2">System initialized successfully.</li>
-                    </ul>
-                </div>
-            </section>
-
-            <!-- MODULE 2: CLASSIC TASKS -->
-            <section id="module-tasks" class="module-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-2xl font-bold text-gray-800">Task List</h1>
-                </div>
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
-                    <table class="w-full text-left border-collapse min-w-[600px]">
-                        <thead class="bg-gray-100 text-xs font-semibold text-gray-600 uppercase">
-                            <tr>
-                                <th class="p-3 border-b">Task Name</th>
-                                <th class="p-3 border-b">Assignee</th>
-                                <th class="p-3 border-b">Status</th>
-                                <th class="p-3 border-b">Priority</th>
-                                <th class="p-3 border-b">Logged Hours</th>
-                                <th class="p-3 border-b text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="task-table-body" class="divide-y divide-gray-100 text-sm">
-                            <!-- Injected by JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- MODULE 3: KANBAN BOARD -->
-            <section id="module-kanban" class="module-content hidden space-y-4">
-                <h1 class="text-2xl font-bold text-gray-800">Kanban Board</h1>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <!-- Column: To Do -->
-                    <div class="bg-gray-200/70 p-4 rounded-lg flex flex-col h-[calc(100vh-200px)]" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'To Do')">
-                        <h3 class="font-bold text-gray-700 mb-3 flex justify-between items-center">
-                            To Do <span id="count-todo" class="bg-gray-300 text-gray-700 px-2 py-0.5 rounded-full text-xs">0</span>
-                        </h3>
-                        <div id="kanban-todo" class="space-y-3 overflow-y-auto flex-1"></div>
-                    </div>
-                    <!-- Column: In Progress -->
-                    <div class="bg-blue-50 p-4 rounded-lg flex flex-col h-[calc(100vh-200px)] border border-blue-100" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'In Progress')">
-                        <h3 class="font-bold text-blue-800 mb-3 flex justify-between items-center">
-                            In Progress <span id="count-inprogress" class="bg-blue-200 text-blue-800 px-2 py-0.5 rounded-full text-xs">0</span>
-                        </h3>
-                        <div id="kanban-inprogress" class="space-y-3 overflow-y-auto flex-1"></div>
-                    </div>
-                    <!-- Column: Closed -->
-                    <div class="bg-green-50 p-4 rounded-lg flex flex-col h-[calc(100vh-200px)] border border-green-100" ondragover="allowDrop(event)" ondrop="handleDrop(event, 'Closed')">
-                        <h3 class="font-bold text-green-800 mb-3 flex justify-between items-center">
-                            Closed <span id="count-closed" class="bg-green-200 text-green-800 px-2 py-0.5 rounded-full text-xs">0</span>
-                        </h3>
-                        <div id="kanban-closed" class="space-y-3 overflow-y-auto flex-1"></div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- MODULE 4: GANTT CHART -->
-            <section id="module-gantt" class="module-content hidden space-y-4">
-                <h1 class="text-2xl font-bold text-gray-800">Gantt Chart View</h1>
-                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
-                    <div class="min-w-[600px]" id="gantt-container">
-                        <!-- Injected by JS -->
-                    </div>
-                </div>
-            </section>
-
-            <!-- MODULE 5: TIMESHEET LOGS -->
-            <section id="module-timesheet" class="module-content hidden space-y-4">
-                <h1 class="text-2xl font-bold text-gray-800">Timesheet & Time Tracking</h1>
-                <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                    <form id="time-log-form" onsubmit="handleLogTime(event)" class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-                        <select id="time-task-select" class="p-2 border rounded-md text-sm" required>
-                            <!-- Task options -->
-                        </select>
-                        <input type="number" id="time-hours" placeholder="Hours spent" min="0.5" step="0.5" class="p-2 border rounded-md text-sm" required>
-                        <input type="text" id="time-notes" placeholder="Work description" class="p-2 border rounded-md text-sm" required>
-                        <button type="submit" class="bg-blue-600 text-white font-medium px-4 py-2 rounded-md hover:bg-blue-700 transition text-sm">Log Time</button>
-                    </form>
-
-                    <h3 class="font-bold text-md text-gray-700 mb-3">Time Logs</h3>
-                    <ul id="time-log-list" class="divide-y divide-gray-100 text-sm">
-                        <!-- Injected by JS -->
-                    </ul>
-                </div>
-            </section>
-
-            <!-- MODULE 6: ISSUE TRACKER -->
-            <section id="module-issues" class="module-content hidden space-y-4">
-                <div class="flex justify-between items-center">
-                    <h1 class="text-2xl font-bold text-gray-800">Issue / Bug Tracker</h1>
-                    <button onclick="openIssueModal()" class="bg-red-600 hover:bg-red-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition">Submit Bug</button>
-                </div>
-                <div class="bg-white rounded-lg shadow-sm border border-gray-200 overflow-x-auto">
-                    <table class="w-full text-left border-collapse min-w-[500px]">
-                        <thead class="bg-gray-100 text-xs font-semibold text-gray-600 uppercase">
-                            <tr>
-                                <th class="p-3 border-b">Issue Title</th>
-                                <th class="p-3 border-b">Severity</th>
-                                <th class="p-3 border-b">Status</th>
-                                <th class="p-3 border-b text-right">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="issue-table-body" class="divide-y divide-gray-100 text-sm">
-                            <!-- Injected by JS -->
-                        </tbody>
-                    </table>
-                </div>
-            </section>
-
-            <!-- MODULE 7: REPORTS -->
-            <section id="module-reports" class="module-content hidden space-y-4">
-                <h1 class="text-2xl font-bold text-gray-800">Reports & Analytics</h1>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="font-bold text-gray-700 mb-4">Task Status Breakdown</h3>
-                        <div id="report-task-breakdown" class="space-y-3">
-                            <!-- Injected by JS -->
-                        </div>
-                    </div>
-                    <div class="bg-white p-6 rounded-lg shadow-sm border border-gray-200">
-                        <h3 class="font-bold text-gray-700 mb-4">Resource Workload</h3>
-                        <div id="report-resource-breakdown" class="space-y-3">
-                            <!-- Injected by JS -->
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-        </main>
-    </div>
-
-    <!-- Create Task Modal -->
-    <div id="task-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-4">
-            <h2 class="text-xl font-bold text-gray-800">Create New Task</h2>
-            <form onsubmit="handleCreateTask(event)" class="space-y-3">
+            <form id="login-form" class="space-y-5" novalidate>
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Task Title</label>
-                    <input type="text" id="task-title" class="w-full p-2 border rounded-md text-sm" required>
+                    <label for="username" class="block text-sm font-semibold text-slate-700 mb-2">User ID / Email</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-user absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input id="username" name="username" type="text" autocomplete="username"
+                               class="w-full pl-10 pr-4 py-3 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                               placeholder="Enter your user ID" required>
+                    </div>
                 </div>
+
                 <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Assignee</label>
-                    <input type="text" id="task-assignee" class="w-full p-2 border rounded-md text-sm" placeholder="e.g., Varun Sharma" required>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Status</label>
-                        <select id="task-status" class="w-full p-2 border rounded-md text-sm">
-                            <option value="To Do">To Do</option>
-                            <option value="In Progress">In Progress</option>
-                            <option value="Closed">Closed</option>
-                        </select>
-                    </div>
-                    <div>
-                        <label class="block text-xs font-semibold text-gray-600 mb-1">Priority</label>
-                        <select id="task-priority" class="w-full p-2 border rounded-md text-sm">
-                            <option value="Low">Low</option>
-                            <option value="Medium">Medium</option>
-                            <option value="High">High</option>
-                        </select>
+                    <label for="password" class="block text-sm font-semibold text-slate-700 mb-2">Password</label>
+                    <div class="relative">
+                        <i class="fa-solid fa-lock absolute left-3 top-1/2 -translate-y-1/2 text-slate-400"></i>
+                        <input id="password" name="password" type="password" autocomplete="current-password"
+                               class="w-full pl-10 pr-12 py-3 border border-slate-300 rounded-lg outline-none focus:ring-2 focus:ring-red-500 focus:border-red-500"
+                               placeholder="Enter your password" required>
+                        <button type="button" id="toggle-password"
+                                class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-700"
+                                aria-label="Show password">
+                            <i class="fa-solid fa-eye"></i>
+                        </button>
                     </div>
                 </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeTaskModal()" class="px-4 py-2 border rounded-md text-sm text-gray-600">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700">Save Task</button>
+
+                <div id="error-message" class="hidden rounded-lg bg-red-50 border border-red-200 text-red-700 px-4 py-3 text-sm">
+                    <i class="fa-solid fa-circle-exclamation mr-2"></i>
+                    <span>Invalid user ID or password.</span>
                 </div>
+
+                <button type="submit"
+                        class="login-btn w-full bg-red-600 hover:bg-red-700 text-white font-semibold py-3 rounded-lg">
+                    <i class="fa-solid fa-right-to-bracket mr-2"></i> Sign In
+                </button>
             </form>
-        </div>
-    </div>
 
-    <!-- Create Issue Modal -->
-    <div id="issue-modal" class="fixed inset-0 bg-black/50 backdrop-blur-sm hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-lg shadow-lg w-full max-w-md p-6 space-y-4">
-            <h2 class="text-xl font-bold text-gray-800">Submit New Issue</h2>
-            <form onsubmit="handleCreateIssue(event)" class="space-y-3">
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Issue Title</label>
-                    <input type="text" id="issue-title" class="w-full p-2 border rounded-md text-sm" required>
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold text-gray-600 mb-1">Severity</label>
-                    <select id="issue-severity" class="w-full p-2 border rounded-md text-sm">
-                        <option value="Low">Low</option>
-                        <option value="Medium">Medium</option>
-                        <option value="High">High</option>
-                        <option value="Critical">Critical</option>
-                    </select>
-                </div>
-                <div class="flex justify-end gap-2 pt-2">
-                    <button type="button" onclick="closeIssueModal()" class="px-4 py-2 border rounded-md text-sm text-gray-600">Cancel</button>
-                    <button type="submit" class="px-4 py-2 bg-red-600 text-white rounded-md text-sm font-medium hover:bg-red-700">Submit Bug</button>
-                </div>
-            </form>
-        </div>
-    </div>
+            <div class="mt-7 pt-5 border-t border-slate-200 text-center">
+                <p class="text-xs text-slate-400">Zoho Projects Replica v1.0</p>
+            </div>
+        </section>
 
-    <!-- JavaScript Application Logic -->
+        <p class="text-center text-xs text-slate-400 mt-5">
+            Demo login: <strong class="text-slate-300">admin</strong> / <strong class="text-slate-300">Admin@123</strong>
+        </p>
+    </main>
+
     <script>
-        // Data State Management
-        let appData = {
-            tasks: JSON.parse(localStorage.getItem('zoho_tasks')) || [
-                { id: 1, title: 'Setup Cloud Infrastructure', assignee: 'Varun Sharma', status: 'In Progress', priority: 'High', loggedHours: 4 },
-                { id: 2, title: 'Configure Security Posture', assignee: 'Alex Rivera', status: 'To Do', priority: 'Medium', loggedHours: 0 }
-            ],
-            issues: JSON.parse(localStorage.getItem('zoho_issues')) || [
-                { id: 1, title: 'SSO Login Failure', severity: 'Critical', status: 'Open' }
-            ],
-            timeLogs: JSON.parse(localStorage.getItem('zoho_timelogs')) || [
-                { id: 1, taskId: 1, hours: 4, notes: 'Configured security groups and networking' }
-            ]
-        };
-
-        function saveData() {
-            localStorage.setItem('zoho_tasks', JSON.stringify(appData.tasks));
-            localStorage.setItem('zoho_issues', JSON.stringify(appData.issues));
-            localStorage.setItem('zoho_timelogs', JSON.stringify(appData.timeLogs));
-            renderAll();
+        // If already authenticated, go straight to the portal.
+        if (sessionStorage.getItem('zp_authenticated') === 'true') {
+            window.location.replace('portal.html');
         }
 
-        // Navigation Switcher
-        function switchTab(tabId) {
-            document.querySelectorAll('.module-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('bg-slate-700', 'text-white'));
+        const form = document.getElementById('login-form');
+        const username = document.getElementById('username');
+        const password = document.getElementById('password');
+        const error = document.getElementById('error-message');
+        const card = document.getElementById('login-card');
+        const toggle = document.getElementById('toggle-password');
 
-            document.getElementById(`module-${tabId}`).classList.remove('hidden');
-            document.getElementById(`nav-${tabId}`).classList.add('bg-slate-700', 'text-white');
+        toggle.addEventListener('click', () => {
+            const showing = password.type === 'text';
+            password.type = showing ? 'password' : 'text';
+            toggle.innerHTML = showing
+                ? '<i class="fa-solid fa-eye"></i>'
+                : '<i class="fa-solid fa-eye-slash"></i>';
+        });
+
+        function showError(message) {
+            error.querySelector('span').textContent = message;
+            error.classList.remove('hidden');
+            card.classList.remove('shake');
+            void card.offsetWidth;
+            card.classList.add('shake');
         }
 
-        // Modal Controls
-        function openTaskModal() { document.getElementById('task-modal').classList.remove('hidden'); }
-        function closeTaskModal() { document.getElementById('task-modal').classList.add('hidden'); }
-        function openIssueModal() { document.getElementById('issue-modal').classList.remove('hidden'); }
-        function closeIssueModal() { document.getElementById('issue-modal').classList.add('hidden'); }
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            error.classList.add('hidden');
 
-        // Core Actions - Tasks
-        function handleCreateTask(e) {
-            e.preventDefault();
-            const newTask = {
-                id: Date.now(),
-                title: document.getElementById('task-title').value,
-                assignee: document.getElementById('task-assignee').value,
-                status: document.getElementById('task-status').value,
-                priority: document.getElementById('task-priority').value,
-                loggedHours: 0
-            };
-            appData.tasks.push(newTask);
-            closeTaskModal();
-            e.target.reset();
-            saveData();
-        }
+            const user = username.value.trim();
+            const pass = password.value;
 
-        function updateTaskStatus(taskId, newStatus) {
-            const task = appData.tasks.find(t => t.id === taskId);
-            if (task) {
-                task.status = newStatus;
-                saveData();
+            // Demo-only credentials.
+            // For production, move credential validation to a server/backend.
+            const validUser = 'admin';
+            const validPassword = 'Admin@123';
+
+            if (user === validUser && pass === validPassword) {
+                sessionStorage.setItem('zp_authenticated', 'true');
+                sessionStorage.setItem('zp_user', user);
+                window.location.replace('portal.html');
+            } else {
+                showError('Invalid user ID or password. Please try again.');
+                password.value = '';
+                password.focus();
             }
-        }
-
-        function deleteTask(taskId) {
-            appData.tasks = appData.tasks.filter(t => t.id !== taskId);
-            // Clean related time logs
-            appData.timeLogs = appData.timeLogs.filter(l => l.taskId !== taskId);
-            saveData();
-        }
-
-        // Core Actions - Issues
-        function handleCreateIssue(e) {
-            e.preventDefault();
-            const newIssue = {
-                id: Date.now(),
-                title: document.getElementById('issue-title').value,
-                severity: document.getElementById('issue-severity').value,
-                status: 'Open'
-            };
-            appData.issues.push(newIssue);
-            closeIssueModal();
-            e.target.reset();
-            saveData();
-        }
-
-        function resolveIssue(issueId) {
-            const issue = appData.issues.find(i => i.id === issueId);
-            if (issue) {
-                issue.status = 'Resolved';
-                saveData();
-            }
-        }
-
-        // Core Actions - Timesheets
-        function handleLogTime(e) {
-            e.preventDefault();
-            const taskId = parseInt(document.getElementById('time-task-select').value);
-            const hours = parseFloat(document.getElementById('time-hours').value);
-            const notes = document.getElementById('time-notes').value;
-
-            if (!taskId) return;
-
-            appData.timeLogs.push({ id: Date.now(), taskId, hours, notes });
-            
-            const task = appData.tasks.find(t => t.id === taskId);
-            if (task) task.loggedHours += hours;
-
-            e.target.reset();
-            saveData();
-        }
-
-        // Drag and Drop (Kanban)
-        function allowDrop(ev) { ev.preventDefault(); }
-        function handleDragStart(ev, id) { ev.dataTransfer.setData("taskId", id); }
-        function handleDrop(ev, status) {
-            ev.preventDefault();
-            const taskId = parseInt(ev.dataTransfer.getData("taskId"));
-            updateTaskStatus(taskId, status);
-        }
-
-        // Rendering Functions
-        function renderAll() {
-            renderDashboard();
-            renderTasks();
-            renderKanban();
-            renderGantt();
-            renderTimesheets();
-            renderIssues();
-            renderReports();
-        }
-
-        function renderDashboard() {
-            document.getElementById('dash-total').innerText = appData.tasks.length;
-            document.getElementById('dash-completed').innerText = appData.tasks.filter(t => t.status === 'Closed').length;
-            document.getElementById('dash-issues').innerText = appData.issues.filter(i => i.status === 'Open').length;
-            
-            const totalHours = appData.timeLogs.reduce((acc, log) => acc + log.hours, 0);
-            document.getElementById('dash-hours').innerText = `${totalHours}h`;
-        }
-
-        function renderTasks() {
-            const tbody = document.getElementById('task-table-body');
-            tbody.innerHTML = appData.tasks.map(t => `
-                <tr class="hover:bg-gray-50">
-                    <td class="p-3 font-medium">${t.title}</td>
-                    <td class="p-3 text-gray-600">${t.assignee}</td>
-                    <td class="p-3">
-                        <select onchange="updateTaskStatus(${t.id}, this.value)" class="text-xs border rounded p-1">
-                            <option value="To Do" ${t.status === 'To Do' ? 'selected' : ''}>To Do</option>
-                            <option value="In Progress" ${t.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
-                            <option value="Closed" ${t.status === 'Closed' ? 'selected' : ''}>Closed</option>
-                        </select>
-                    </td>
-                    <td class="p-3">
-                        <span class="px-2 py-0.5 text-xs rounded font-semibold ${t.priority === 'High' ? 'bg-red-100 text-red-700' : t.priority === 'Medium' ? 'bg-yellow-100 text-yellow-700' : 'bg-gray-100 text-gray-700'}">${t.priority}</span>
-                    </td>
-                    <td class="p-3 text-gray-600">${t.loggedHours} hrs</td>
-                    <td class="p-3 text-right">
-                        <button onclick="deleteTask(${t.id})" class="text-red-500 hover:text-red-700 text-xs"><i class="fa-solid fa-trash"></i></button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderKanban() {
-            const createCard = (t) => `
-                <div draggable="true" ondragstart="handleDragStart(event, ${t.id})" class="bg-white p-3 rounded shadow-sm border border-gray-200 space-y-2 cursor-grab">
-                    <p class="font-semibold text-sm text-gray-800">${t.title}</p>
-                    <div class="flex justify-between items-center text-xs text-gray-500">
-                        <span><i class="fa-regular fa-user"></i> ${t.assignee}</span>
-                        <span class="font-bold ${t.priority === 'High' ? 'text-red-600' : ''}">${t.priority}</span>
-                    </div>
-                </div>
-            `;
-
-            document.getElementById('kanban-todo').innerHTML = appData.tasks.filter(t => t.status === 'To Do').map(createCard).join('');
-            document.getElementById('kanban-inprogress').innerHTML = appData.tasks.filter(t => t.status === 'In Progress').map(createCard).join('');
-            document.getElementById('kanban-closed').innerHTML = appData.tasks.filter(t => t.status === 'Closed').map(createCard).join('');
-
-            document.getElementById('count-todo').innerText = appData.tasks.filter(t => t.status === 'To Do').length;
-            document.getElementById('count-inprogress').innerText = appData.tasks.filter(t => t.status === 'In Progress').length;
-            document.getElementById('count-closed').innerText = appData.tasks.filter(t => t.status === 'Closed').length;
-        }
-
-        function renderGantt() {
-            const container = document.getElementById('gantt-container');
-            if (appData.tasks.length === 0) {
-                container.innerHTML = `<p class="text-xs text-gray-400 italic">No tasks available for Gantt presentation.</p>`;
-                return;
-            }
-            container.innerHTML = appData.tasks.map(t => {
-                let width = t.status === 'Closed' ? 'w-full' : t.status === 'In Progress' ? 'w-1/2' : 'w-1/12';
-                let color = t.status === 'Closed' ? 'bg-green-500' : t.status === 'In Progress' ? 'bg-blue-500' : 'bg-gray-300';
-                return `
-                    <div class="mb-4">
-                        <div class="flex justify-between text-xs mb-1 font-semibold text-gray-600">
-                            <span>${t.title} (${t.assignee})</span>
-                            <span>${t.status}</span>
-                        </div>
-                        <div class="w-full bg-gray-100 h-4 rounded-full overflow-hidden">
-                            <div class="${color} h-full ${width} transition-all duration-300"></div>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        function renderTimesheets() {
-            const select = document.getElementById('time-task-select');
-            select.innerHTML = appData.tasks.map(t => `<option value="${t.id}">${t.title}</option>`).join('');
-
-            const list = document.getElementById('time-log-list');
-            if (appData.timeLogs.length === 0) {
-                list.innerHTML = `<li class="py-2 text-xs text-gray-400 italic">No logged hours yet.</li>`;
-                return;
-            }
-            list.innerHTML = appData.timeLogs.map(l => {
-                const task = appData.tasks.find(t => t.id === l.taskId);
-                return `
-                    <li class="py-2 flex justify-between items-center">
-                        <div>
-                            <span class="font-medium text-gray-800">${task ? task.title : 'Deleted Task'}</span>
-                            <p class="text-xs text-gray-500">${l.notes}</p>
-                        </div>
-                        <span class="font-bold text-sm text-blue-600">${l.hours} hrs</span>
-                    </li>
-                `;
-            }).join('');
-        }
-
-        function renderIssues() {
-            const tbody = document.getElementById('issue-table-body');
-            tbody.innerHTML = appData.issues.map(i => `
-                <tr class="hover:bg-gray-50">
-                    <td class="p-3 font-medium">${i.title}</td>
-                    <td class="p-3 text-xs text-red-600 font-bold">${i.severity}</td>
-                    <td class="p-3"><span class="${i.status === 'Resolved' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'} text-xs px-2 py-0.5 rounded">${i.status}</span></td>
-                    <td class="p-3 text-right">
-                        ${i.status === 'Open' ? `<button onclick="resolveIssue(${i.id})" class="text-xs text-blue-600 hover:underline">Resolve</button>` : `<span class="text-xs text-gray-400">Closed</span>`}
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function renderReports() {
-            const total = appData.tasks.length || 1;
-            const closed = appData.tasks.filter(t => t.status === 'Closed').length;
-            const inProg = appData.tasks.filter(t => t.status === 'In Progress').length;
-            const todo = appData.tasks.filter(t => t.status === 'To Do').length;
-
-            document.getElementById('report-task-breakdown').innerHTML = `
-                <div>
-                    <div class="flex justify-between text-xs font-semibold mb-1"><span>Completed</span><span>${Math.round((closed/total)*100)}%</span></div>
-                    <div class="w-full bg-gray-200 h-2 rounded"><div class="bg-green-500 h-2 rounded" style="width: ${(closed/total)*100}%"></div></div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-xs font-semibold mb-1"><span>In Progress</span><span>${Math.round((inProg/total)*100)}%</span></div>
-                    <div class="w-full bg-gray-200 h-2 rounded"><div class="bg-blue-500 h-2 rounded" style="width: ${(inProg/total)*100}%"></div></div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-xs font-semibold mb-1"><span>To Do</span><span>${Math.round((todo/total)*100)}%</span></div>
-                    <div class="w-full bg-gray-200 h-2 rounded"><div class="bg-gray-400 h-2 rounded" style="width: ${(todo/total)*100}%"></div></div>
-                </div>
-            `;
-
-            // Resource Workload Calculation
-            const assigneeWorkload = {};
-            appData.tasks.forEach(t => {
-                assigneeWorkload[t.assignee] = (assigneeWorkload[t.assignee] || 0) + 1;
-            });
-
-            const workloadEntries = Object.entries(assigneeWorkload);
-            document.getElementById('report-resource-breakdown').innerHTML = workloadEntries.length ? workloadEntries.map(([name, count]) => `
-                <div>
-                    <div class="flex justify-between text-xs font-semibold mb-1"><span>${name}</span><span>${count} task(s)</span></div>
-                    <div class="w-full bg-gray-200 h-2 rounded"><div class="bg-indigo-500 h-2 rounded" style="width: ${Math.min((count/total)*100, 100)}%"></div></div>
-                </div>
-            `).join('') : `<p class="text-xs text-gray-400 italic">No resource workload data available.</p>`;
-        }
-
-        // Initial Initialization
-        window.onload = renderAll;
+        });
     </script>
 </body>
 </html>
